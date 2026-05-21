@@ -5,6 +5,7 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.metrics import mean_absolute_error
 import xgboost as xgb
 import matplotlib.pyplot as plt
+import os
 
 # Feature Engineering
 def feature_engineering(df):
@@ -28,11 +29,26 @@ def train_model(X_train, y_train, model_name):
 def main():
     st.markdown("<h1 style='text-align: center;'>🌡️ Temperature Forecasting with Different Models</h1>", unsafe_allow_html=True)
 
-    uploaded_file = st.file_uploader("📁 Upload a CSV file (Date, Rain, Temp Max, Temp Min)", type=["csv"])
+    # 1. File Uploader Component
+    uploaded_file = st.file_uploader("📁 Upload a custom CSV file (Date, Rain, Temp Max, Temp Min)", type=["csv"])
 
+    df = None
+
+    # 2. Check if user uploaded a file, otherwise fall back to the default file
     if uploaded_file is not None:
         df = pd.read_csv(uploaded_file)
+        st.info("ℹ️ Using your uploaded custom dataset.")
+    else:
+        default_filename = "weather_data.csv"
+        if os.path.exists(default_filename):
+            df = pd.read_csv(default_filename)
+            st.info(f"ℹ️ No file uploaded. Loading default database: `{default_filename}`")
+        else:
+            st.warning(f"⚠️ Please upload a CSV file or place a default `{default_filename}` file in your project folder to get started.")
+            return
 
+    # 3. Process the dataset (Whether default or uploaded)
+    if df is not None:
         # Parse date
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
 
