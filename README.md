@@ -19,7 +19,7 @@ A Streamlit web application that provides historical climate summaries and uses 
 ## 📂 Project Repository Structure
 
 ```text
-├── streamlit_app.py      # Main Streamlit application source script
+├── app.py      # Main Streamlit application source script
 ├── weather_data.csv      # Default fallback local dataset file
 ├── requirements.txt      # Python system dependencies manifest
 └── README.md             # Project documentation (This file)
@@ -52,7 +52,7 @@ Follow these steps to run the application on your local laptop environment:
    ```
 3. **Execute the execution command** inside your project folder:
    ```bash
-   streamlit run streamlit_app.py
+   streamlit run app.py
    ```
 
 ---
